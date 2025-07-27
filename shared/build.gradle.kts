@@ -8,9 +8,10 @@ kotlin {
     targetHierarchy.default()
 
     androidTarget {
-        compilations.all {
+        jvmToolchain(17)
+        tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
