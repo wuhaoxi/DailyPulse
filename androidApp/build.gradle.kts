@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.sqlDelight).apply(false)
 }
 
 android {
@@ -46,7 +47,10 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.coil.compose)
     implementation(libs.androidx.navigation.compose)
+    //implementation(libs.androidx.material3.android)
     debugImplementation(libs.compose.ui.tooling)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation (libs.accompanist.swiperefresh)
+    debugImplementation(libs.compose.ui.tooling)
 }
