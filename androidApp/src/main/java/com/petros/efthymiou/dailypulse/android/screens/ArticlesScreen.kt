@@ -1,21 +1,20 @@
 package com.petros.efthymiou.dailypulse.android.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -31,19 +30,20 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import com.petros.efthymiou.dailypulse.articles.Article
-import com.petros.efthymiou.dailypulse.articles.ArticlesViewModel
+import com.petros.efthymiou.dailypulse.articles.application.Article
+import com.petros.efthymiou.dailypulse.articles.presentation.ArticlesViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ArticlesScreen(
     onAboutButtonClick: () -> Unit,
+    onSourcesButtonClick: () -> Unit,
     articlesViewModel: ArticlesViewModel = getViewModel()
 ) {
     val articlesState = articlesViewModel.articlesState.collectAsState()
 
     Column {
-        AppBar(onAboutButtonClick)
+        AppBar(onAboutButtonClick, onSourcesButtonClick)
         if (articlesState.value.error != null)
             ErrorMessage(articlesState.value.error!!)
         if (articlesState.value.articles.isNotEmpty())
@@ -54,7 +54,8 @@ fun ArticlesScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AppBar(
-    onAboutButtonClick: () -> Unit
+    onAboutButtonClick: () -> Unit,
+    onSourcesButtonClick: () -> Unit,
 ) {
     TopAppBar(
         title = {
@@ -63,6 +64,16 @@ private fun AppBar(
             )
         },
         actions = {
+            IconButton(
+                onClick = {
+                    onSourcesButtonClick()
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.List,
+                    contentDescription = "Sources Button",
+                )
+            }
             IconButton(
                 onClick = {
                     onAboutButtonClick()

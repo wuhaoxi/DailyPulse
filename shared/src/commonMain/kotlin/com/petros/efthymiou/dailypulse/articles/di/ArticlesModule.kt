@@ -3,8 +3,8 @@ package com.petros.efthymiou.dailypulse.articles.di
 import com.petros.efthymiou.dailypulse.articles.ArticleService
 import com.petros.efthymiou.dailypulse.articles.ArticlesDataSource
 import com.petros.efthymiou.dailypulse.articles.ArticlesRepository
-import com.petros.efthymiou.dailypulse.articles.ArticlesUseCase
-import com.petros.efthymiou.dailypulse.articles.ArticlesViewModel
+import com.petros.efthymiou.dailypulse.articles.application.ArticlesUseCase
+import com.petros.efthymiou.dailypulse.articles.presentation.ArticlesViewModel
 import org.koin.dsl.module
 
 val articlesModule = module {
