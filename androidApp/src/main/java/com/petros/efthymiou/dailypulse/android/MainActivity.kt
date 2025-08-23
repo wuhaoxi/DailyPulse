@@ -9,6 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.petros.efthymiou.dailypulse.articles.presentation.ArticlesViewModel
+import com.petros.efthymiou.dailypulse.ui.App
+import com.petros.efthymiou.dailypulse.ui.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppScaffold()
+                    App()
                 }
             }
         }

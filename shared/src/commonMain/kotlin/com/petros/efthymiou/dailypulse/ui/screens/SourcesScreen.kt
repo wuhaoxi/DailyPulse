@@ -1,4 +1,4 @@
-package com.petros.efthymiou.dailypulse.android.screens
+package com.petros.efthymiou.dailypulse.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,33 +23,46 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.petros.efthymiou.dailypulse.sources.application.Source
 import com.petros.efthymiou.dailypulse.sources.presentation.SourcesViewModel
-import org.koin.androidx.compose.getViewModel
+import com.petros.efthymiou.dailypulse.ui.screens.elements.ErrorMessage
+import org.koin.compose.koinInject
+
+
+class SourcesScreen(): Screen {
+    @Composable
+    override fun Content() {
+        SourcesScreenContent()
+    }
+
+}
 
 @Composable
-fun SourcesScreen(
-    viewModel: SourcesViewModel = getViewModel(),
-    onUpButtonClick: () -> Unit
+fun SourcesScreenContent(
+    viewModel: SourcesViewModel = koinInject()
 ) {
-    val articleState = viewModel.sourcesState.collectAsState()
+    val sourcesState = viewModel.sourcesState.collectAsState()
     Column {
-        AppBar(onUpButtonClick)
-        if (articleState.value.error != null)
-            ErrorMessage(message = articleState.value.error!!)
+        AppBar()
+        if (sourcesState.value.error != null)
+            ErrorMessage(message = sourcesState.value.error!!)
         SourceListView(viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AppBar(
-    onUpButtonClick: () -> Unit,
-) {
+private fun AppBar() {
+    val navigator = LocalNavigator.currentOrThrow
     TopAppBar(
         title = { Text(text = "Sources") },
         navigationIcon = {
-            IconButton(onClick = onUpButtonClick) {
+            IconButton(onClick = {
+                navigator.pop()
+            }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Up Button",
